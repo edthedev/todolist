@@ -2,7 +2,7 @@
 # https://github.com/trstringer/cli-debugging-cheatsheets/blob/master/go.md
 #
 build:
-	go build minion.go
+	go build todolist.go
 
 run:
 	go run todolist.go

@@ -7,39 +7,11 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"regexp"
-	"strings"
 )
-
-func searchInFile(fileName string, searchString string) bool {
-	var found bool
-
-	data, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		fmt.Printf("Unable to read file: %s - %s", fileName, err)
-	}
-
-	fileContent := string(data)
-
-	found = strings.Contains(fileContent, searchString)
-	return found
-
-}
-
-func searchForTags(tagRegex regexp.Regexp, fileName string) []string {
-
-	data, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		fmt.Printf("Unable to read file: %s - %s", fileName, err)
-	}
-	fileContent := string(data)
-
-	return tagRegex.FindAllString(fileContent, -1)
-}
 
 func searchForMatchesByLine(tagRegex regexp.Regexp, fileName string) []string {
 
@@ -61,16 +33,16 @@ func searchForMatchesByLine(tagRegex regexp.Regexp, fileName string) []string {
 func main() {
 
 	todoFile := flag.String("file", "", "Only search this file for todo lines.")
-	doneFlag := flag.Bool("done", false, "List any done lines.")
-	maxFlag := flag.Int("max", 5, "Maximum number of files or tags to list.")
+	// doneFlag := flag.Bool("done", false, "List any done lines.")
+	// maxFlag := flag.Int("max", 5, "Maximum number of files or tags to list.")
 	flag.Parse()
 
-	todoRegex, _ := regexp.Compile(`(^\-\W\[\W+\].+$)`) // How we find todos
-	doneRegex, _ := regexp.Compile(`\[x\]|\[\/\]`)      // How we find done items.
+	todoRegex, _ := regexp.Compile(`(^[\-\+]\W\[\W+\].+$)`) // How we find todos
+	// doneRegex, _ := regexp.Compile(`\[x\]|\[\/\]`)      // How we find done items.
 
 	var rootPath string = os.Getenv(`todolist`)
 	var notMarkdown int = 0
-	var matchCount int = 0
+	// var matchCount int = 0
 
 	// fmt.Printf("List: %t, Find: %s.", *listFlag, *searchFlag)
 	// fmt.Printf("List: %t, Find: %s.", "--default to list--", *searchFlag)
