@@ -8,7 +8,7 @@ run:
 	go run todolist.go
 
 todoFile: 
-	go run .\minion.go -todo -file test.md
+	go run .\todolist.go -file ./test.md
 
 debug:
 	dlv debug -- --list
