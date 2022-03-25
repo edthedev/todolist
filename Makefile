@@ -13,7 +13,7 @@ todoFile:
 debug:
 	dlv debug -- --list
 
-setup: install_go
+setup:
 	choco install golang
 	go get -u github.com/derekparker/delve/cmd/dlv
 	go get github.com/docopt/docopt-go
