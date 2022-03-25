@@ -4,11 +4,8 @@
 build:
 	go build minion.go
 
-go:
-	go run minion.go --list
-
-todo:
-	go run minion.go -todo
+run:
+	go run todolist.go
 
 todoFile: 
 	go run .\minion.go -todo -file test.md
@@ -16,12 +13,8 @@ todoFile:
 debug:
 	dlv debug -- --list
 
-install_go:
+setup: install_go
 	choco install golang
-
-setup:
 	go get -u github.com/derekparker/delve/cmd/dlv
-
-libs:
 	go get github.com/docopt/docopt-go
 
