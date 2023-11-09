@@ -10,8 +10,16 @@ Or point `todolist` at a singe file:
 ```powershell
 todolist.exe -file ./test.md
 ```
+ 
+## Installation
 
-## Setup
+- Install [GoLang][19]
+
+```sh
+go install github.com/edthedev/todolist@latest
+```
+
+## Developer Setup
 
 - Install [GoLang][19]
 - Install [GNU Make][17]
