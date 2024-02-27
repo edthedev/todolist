@@ -47,8 +47,6 @@ func main() {
 		for scanner.Scan() {
 			var todoLine string = scanner.Text()
 
-			// warning: only supporting one project per line. 
-			// Pull requests welcome.
 			keys = projectRegex.FindAllString(todoLine, -1)
 
 			if *debugFlag {
