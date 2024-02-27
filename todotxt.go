@@ -14,6 +14,7 @@ import (
 func main() {
 
 	todoFile := flag.String("file", "", "Only search this file for todo lines.")
+	debugFlag:= flag.Bool("debug", false, "Print debug output")
 	flag.Parse()
 
 	var rootPath string = os.Getenv(`todotxt`)
@@ -24,11 +25,20 @@ func main() {
 	if *todoFile != "" {
 		rootPath = *todoFile
 	}
+
+	if *debugFlag {
+		fmt.Printf("Reading todo.txt file: %s\n", rootPath)
+	}
+
 	walkErr := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
 
 		file, err := os.Open(path)
 		if err != nil {
 			fmt.Printf("Unable to read file: %s - %s", path, err)
+		} else {
+			if *debugFlag {
+				fmt.Printf("Able to read file: %s\n", path)
+			}
 		}
 
 		scanner := bufio.NewScanner(file)
@@ -39,6 +49,13 @@ func main() {
 			// warning: only supporting one project per line. 
 			// Pull requests welcome.
 			keys = projectRegex.FindAllString(todoLine, -1)
+
+			if *debugFlag {
+				if len(keys) == 0 {
+					fmt.Printf("No projects in line: %s\n", todoLine)
+				}
+			}
+
 			for _, key := range keys{
 				if _, ok := projects[key]; ok {
 					projects[key] = append(projects[key], todoLine)
