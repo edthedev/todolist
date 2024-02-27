@@ -15,11 +15,12 @@ func main() {
 
 	todoFile := flag.String("file", "", "Only search this file for todo lines.")
 	debugFlag:= flag.Bool("debug", false, "Print debug output")
+	headerFormat := flag.String("header", "## %s\n", "Format to display project header lines")
 	flag.Parse()
 
 	var rootPath string = os.Getenv(`todotxt`)
 
-	projectRegex, _ := regexp.Compile(`(\+\W+$)`) // How we find projects
+	projectRegex, _ := regexp.Compile(`(\+\w+$)`) // How we find projects
 	projects := make(map[string][]string)
 
 	if *todoFile != "" {
@@ -67,9 +68,9 @@ func main() {
 		}
 
 		for key, strings := range projects{
-			fmt.Printf("##: %s\n", key)
+			fmt.Printf(*headerFormat, key)
 			for _, str := range strings {
-				fmt.Printf("  - %s\n", str)
+				fmt.Printf("%s\n", str)
 			}
 		}
 
