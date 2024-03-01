@@ -64,12 +64,12 @@ func main() {
 		var todo string
 
 		if len(found) > 0 {
-			fmt.Println("## ", path)
 			fmt.Println("")
+			fmt.Println("## ", path)
 		}
 		for _, todo = range found {
 			fmt.Println(todo)
-			fmt.Println("")
+			// fmt.Println("")
 		}
 
 		/*
