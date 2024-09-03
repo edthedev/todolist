@@ -33,12 +33,16 @@ func searchForMatchesByLine(tagRegex regexp.Regexp, fileName string) []string {
 func main() {
 
 	todoFile := flag.String("file", "", "Only search this file for todo lines.")
-	// doneFlag := flag.Bool("done", false, "List any done lines.")
+	doneFlag := flag.Bool("done", false, "List any done lines.")
 	// maxFlag := flag.Int("max", 5, "Maximum number of files or tags to list.")
 	flag.Parse()
 
 	todoRegex, _ := regexp.Compile(`(^[\-\+]\W\[\W+\].+$)`) // How we find todos
-	// doneRegex, _ := regexp.Compile(`\[x\]|\[\/\]`)      // How we find done items.
+	doneRegex, _ := regexp.Compile(`(^[\-\+]\W\[x\].+$)`) // How we find done items.
+
+	if *doneFlag {
+		todoRegex = doneRegex
+	}
 
 	var rootPath string = os.Getenv(`todolist`)
 	var notMarkdown int = 0
@@ -60,7 +64,6 @@ func main() {
 
 		var found = []string{}
 		found = searchForMatchesByLine(*todoRegex, path)
-		// fmt.Println(found)
 		var todo string
 
 		if len(found) > 0 {
@@ -69,7 +72,6 @@ func main() {
 		}
 		for _, todo = range found {
 			fmt.Println(todo)
-			// fmt.Println("")
 		}
 
 		/*
