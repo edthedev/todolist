@@ -93,7 +93,7 @@ func main() {
 	})
 
 	if *countFlag {
-		fmt.Println("Count", matchCount)
+		fmt.Printf("%d",matchCount)
 	}
 
 	if walkErr != nil {
