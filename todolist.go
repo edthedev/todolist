@@ -34,6 +34,7 @@ func main() {
 
 	todoFile := flag.String("file", "", "Only search this file for todo lines.")
 	doneFlag := flag.Bool("done", false, "List any done lines.")
+	countFlag := flag.Bool("count", false, "Count todo items, rather than list.")
 	// maxFlag := flag.Int("max", 5, "Maximum number of files or tags to list.")
 	flag.Parse()
 
@@ -46,7 +47,7 @@ func main() {
 
 	var rootPath string = os.Getenv(`todolist`)
 	var notMarkdown int = 0
-	// var matchCount int = 0
+	var matchCount int = 0
 
 	// fmt.Printf("List: %t, Find: %s.", *listFlag, *searchFlag)
 	// fmt.Printf("List: %t, Find: %s.", "--default to list--", *searchFlag)
@@ -66,12 +67,16 @@ func main() {
 		found = searchForMatchesByLine(*todoRegex, path)
 		var todo string
 
-		if len(found) > 0 {
+		if len(found) > 0 && ! *countFlag {
 			fmt.Println("")
 			fmt.Println("## ", path)
 		}
 		for _, todo = range found {
-			fmt.Println(todo)
+			if *countFlag {
+				matchCount += 1
+			} else {
+				fmt.Println(todo)
+			}
 		}
 
 		/*
@@ -86,6 +91,10 @@ func main() {
 
 		return nil
 	})
+
+	if *countFlag {
+		fmt.Println("Count", matchCount)
+	}
 
 	if walkErr != nil {
 		log.Fatal(walkErr)
