@@ -45,7 +45,7 @@ func main() {
 		todoRegex = doneRegex
 	}
 
-	var rootPath string = os.Getenv(`todolist`)
+	var rootPath string = os.Getenv(`TODOLIST`)
 	var notMarkdown int = 0
 	var matchCount int = 0
 
